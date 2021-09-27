@@ -62,9 +62,6 @@ typedef struct {
 
 MyLsCpu info;
 
-#define _CPUINFO_PATH_ "/proc/cpuinfo"
-#define _L1_MEM_PATH_ "/sys/devices/system/cpu/cpu0/cache/"
-
 void Update(){
   FILE * fp = fopen(_CPUINFO_PATH_,"r");
   char buff[BUFFER_SIZE];
@@ -134,6 +131,16 @@ void Update(){
   memset(ptr,'\0',BUFFER_SIZE);
   sprintf(info._FLAGS,"%s",buff+pos+1);
 
+  /* MHZ */
+  fseek(fp,0,SEEK_SET);
+  for(int i=0;i<=CPUINFO_CPU_MHZ;i++){
+    memset(buff,'\0',BUFFER_SIZE);
+    fgets(buff,BUFFER_SIZE,fp);
+  }
+  pos = 0;
+  while(buff[pos++] != ':');
+  memset(ptr,'\0',BUFFER_SIZE);
+  sprintf(info._CPU_MHZ,"%s",buff+pos+1);
 
   /* L3 Mem */
   fseek(fp,0,SEEK_SET);
@@ -215,6 +222,8 @@ void View_mylscpu(){
   fprintf(stdout,"%-21s : %s",MODEL_NAME ,info._MODEL_NAME);
   // CPU CORES 출력
   fprintf(stdout,"%-21s : %s",CPUS ,info._CPUS);
+  // CPU MHZ 출력
+  fprintf(stdout,"%-21s : %s",CPU_MHZ ,info._CPU_MHZ);
   // L1d Memory 출력
   fprintf(stdout,"%-21s : %s",L1D_CACHE ,info._L1D_CACHE);
   // L1i Memory 출력

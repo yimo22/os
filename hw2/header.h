@@ -45,6 +45,9 @@
 #define MEMINFO "/proc/meminfo"		// /proc/meminfo 절대 경로
 #define DEV "/dev"					// /dev 절대 경로
 
+#define _CPUINFO_PATH_ "/proc/cpuinfo" // /proc/cpuinfo 경로
+#define _L1_MEM_PATH_ "/sys/devices/system/cpu/cpu0/cache/" // 
+
 #define FD__ZERO "/fd/0"			// /proc/pid 에서의 0번째 fd 경로
 #define STAT "/stat"				// /proc/pid에서의 stat 경로
 #define STATUS "/status"			// /proc/pid에서의 status 경로
